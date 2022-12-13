@@ -10,12 +10,9 @@
 /******************************************
 /* LAYOUT
 /*******************************************/
+
 body {
-  background-image: url('');
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-width: 100vw;
-  min-height: 100vh;
+  background-color: rgba(0, 0, 0, .9);
   color: white;
   font-family: 'Roboto', sans-serif;
   display: flex;
@@ -23,33 +20,46 @@ body {
 }
 
 .main-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
 }
 
 .description {
   max-width: 50vw;
-  background-color: rgba(17, 24, 39, 0.6);
   text-align: center;
+  grid-column: 1;
 }
 
 h3 {
   font-weight: 200;
 }
 
+.image-container {
+  grid-column: 2;
+}
+
+.video {
+  grid-column: 2;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;  
+}
+
+.video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 img {
   display: block;
   margin: 0 auto;
-  max-width: 100vw;
-  height: auto;
+  max-width: 80vw;
 }
 
 .hidden {
   display: none;
 }
-
-/******************************************
-/* ADDITIONAL STYLES
-/*******************************************/

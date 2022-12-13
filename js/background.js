@@ -9,8 +9,39 @@ let video = document.querySelector('.video')
 let frame = document.querySelector('iframe')
 let h3 = document.querySelector('h3')
 let h4 = document.querySelector('h4')
+let imgCont = document.querySelector('.image-container')
 
 let currentDate = new Date().toJSON().slice(0, 10);
+
+
+
+function startPageFetch(){
+    const url = `https://api.nasa.gov/planetary/apod?api_key=pEUtppBdJImeuAOGYAtsLkwNci6EWQmolt70gzpj&date=${currentDate}`
+  
+    fetch(url)
+        .then(res => res.json()) // parse response as JSON
+        .then(data => {
+            h2.innerText = data.title
+            h3.innerText = data.explanation
+
+            if (data.media_type == 'image') {
+                img.src = data.hdurl
+                video.classList.add('hidden')
+                frame.src = ''
+            }
+            else if (data.media_type == 'video') {
+                imgCont.classList.add('hidden')
+                video.classList.remove('hidden')
+                frame.src = data.url
+                console.log(data.media_type)
+            }
+        })
+        .catch(err => {
+            console.log(`error ${err}`)
+        });
+  }
+startPageFetch()
+
 
 function getFetch(){
   const choice = document.querySelector('input').value
@@ -23,42 +54,18 @@ function getFetch(){
         h3.innerText = data.explanation
         
         if (data.media_type == 'image') {
-            document.body.style.backgroundImage = `url(${data.hdurl})`
+            img.src = data.hdurl
             video.classList.add('hidden')
             frame.src = ''
         }
         else if (data.media_type == 'video') {
-            document.body.style.backgroundImage = `url(img/space.jpg)`
+            imgCont.classList.add('hidden')
             video.classList.remove('hidden')
             frame.src = data.url
         }
-        
-        // TESTS //
-        //console.log(currentDate)
-       // console.log(data)
-       // console.log(data.media_type)
       })
 
       .catch(err => {
           console.log(`error ${err}`)
       });
 }
-
-
-function backgroundFetch(){
-    //const choice = document.querySelector('input').value
-    const url = `https://api.nasa.gov/planetary/apod?api_key=pEUtppBdJImeuAOGYAtsLkwNci6EWQmolt70gzpj&date=${currentDate}`
-  
-    fetch(url)
-        .then(res => res.json()) // parse response as JSON
-        .then(data => {
-            document.body.style.backgroundImage = `url(${data.hdurl})`
-            h2.innerText = data.title
-            h3.innerText = data.explanation
-        })
-        .catch(err => {
-            console.log(`error ${err}`)
-        });
-  }
-
-  backgroundFetch()
